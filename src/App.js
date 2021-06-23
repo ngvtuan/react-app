@@ -68,9 +68,6 @@ function App() {
       {qrcode?.map((qr, idx) => (
         <QRCode value={qr} key={idx} renderAs="svg" className="qrcode" style={{ marginBottom: '20px',marginRight: '20px', width: '1px', height: '1px' }} />
       ))}
-      <div style={{ marginTop: '20px' }}>
-        <img src={`data:image/svg+xml;base64,${img}`} alt="" />
-      </div>
     </div>
   );
 }

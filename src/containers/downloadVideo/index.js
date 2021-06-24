@@ -12,11 +12,12 @@ function DownloadVideo() {
 
   const [videoSrc, setVideoSrc] = useState('');
   const ffmpeg = createFFmpeg({
-    log: true,
+    log: process.env.NODE_ENV === 'development',
     corePath: 'https://unpkg.com/@ffmpeg/core@0.10.0/dist/ffmpeg-core.js'
   });
 
   const doTranscode = async () => {
+    const fileName = params?.filename || 'Paper_Wallet__QRCode'
     const canvas = document.querySelectorAll('.qrcode')
     const images = []
     for (let i = 0; i < canvas.length; i++) {
@@ -24,16 +25,15 @@ function DownloadVideo() {
       images.push(img)
     }
     const frameSpeed = images.length * 32;
-
     await ffmpeg.load();
 
     for (let i = 0; i < images.length; i += 1) {
       ffmpeg.FS('writeFile', `img00${i}.png`, await fetchFile(images[i]));
     }
 
-    await ffmpeg.run('-framerate', '60', '-pattern_type', 'glob', '-i', '*.png', '-vf', `setpts=${frameSpeed}*PTS`, '-c:a', 'copy', '-shortest', '-c:v', 'libx264', '-pix_fmt', 'yuv420p', 'out.mp4');
+    await ffmpeg.run('-framerate', '60', '-pattern_type', 'glob', '-i', '*.png', '-vf', `setpts=${frameSpeed}*PTS`, '-c:a', 'copy', '-shortest', '-c:v', 'libx264', '-pix_fmt', 'yuv420p', `${fileName}.mp4`);
 
-    const data = ffmpeg.FS('readFile', 'out.mp4');
+    const data = ffmpeg.FS('readFile', `${fileName}.mp4`);
     for (let i = 0; i < images.length; i += 1) {
       ffmpeg.FS('unlink', `img00${i}.png`);
     }
@@ -43,7 +43,7 @@ function DownloadVideo() {
     if (params?.view !== 'video') {
       const downloadLink = document.createElement('a')
       downloadLink.href = videoUrl
-      downloadLink.download = 'qrcode.mp4'
+      downloadLink.download = `${fileName}.mp4`
       document.body.appendChild(downloadLink)
       downloadLink.click()
       document.body.removeChild(downloadLink)
@@ -70,13 +70,13 @@ function DownloadVideo() {
       <button onClick={doTranscode} className="btnDownload">Download QR Code Video</button>
     )
   }
-
+  const totalQRCode = qrcode.length;
   return (
     <div className="download-video">
       {renderContent()}
       <div className="qrcode-container">
         {qrcode?.map((qr, idx) => (
-          <QRCode value={qr} key={idx} size={1024} className="qrcode" />
+          <QRCode value={`${idx}::${totalQRCode}::${qr}`} key={idx} size={1024} className="qrcode" />
         ))}
       </div>
     </div>

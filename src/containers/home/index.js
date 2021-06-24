@@ -3,7 +3,7 @@ import React from 'react';
 let dataImage = " iframe data";
 
 if (window.frameElement) {
-   dataImage += window.frameElement.attributes["data-image"].value
+  dataImage += window.frameElement.attributes["data-image"].value
 }
 
 export default function HomePage() {

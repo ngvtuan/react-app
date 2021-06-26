@@ -21,18 +21,23 @@ function App() {
   }, false);
 
   const doTranscode = async (images) => {
+	  console.log(1111, 'images', images);
     if (images.length) {
       const frameSpeed = images.length * 32;
+	  console.log(1111, 'frameSpeed');
       await ffmpeg.load();
+	  console.log(1111, 'ffmpeg.load');
       for (let i = 0; i < images.length; i += 1) {
         ffmpeg.FS('writeFile', `img00${i}.png`, await fetchFile(images[i]));
       }
+	  console.log(1111, 'ffmpeg.run');
       await ffmpeg.run('-framerate', '60', '-pattern_type', 'glob', '-i', '*.png', '-vf', `setpts=${frameSpeed}*PTS`, '-c:a', 'copy', '-shortest', '-c:v', 'libx264', '-pix_fmt', 'yuv420p', `${fileName}.mp4`);
       const data = ffmpeg.FS('readFile', `${fileName}.mp4`);
       for (let i = 0; i < images.length; i += 1) {
         ffmpeg.FS('unlink', `img00${i}.png`);
       }
       const videoUrl = URL.createObjectURL(new Blob([data.buffer], { type: 'video/mp4' }));
+	  console.log(1111, 'videoUrl', videoUrl);
       setVideoSrc(videoUrl);
       currentSource.postMessage({
         videoUrl,

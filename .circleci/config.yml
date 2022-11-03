@@ -33,7 +33,7 @@ jobs:
           fingerprints:
             - '43:ce:13:51:63:18:f9:ba:13:1c:5d:61:02:89:c7:37'
       - run:
-          name: Deploy Staging over SSH
+          name: Deploy Staging over SSH 1
           command: ssh -o "StrictHostKeyChecking no" ubuntu@3.218.67.255 "sh /home/ubuntu/react-app/restart-app.sh"
 
 workflows:

@@ -36,8 +36,8 @@ jobs:
           name: Update known hosts
           command: ssh-keyscan -H 3.218.67.255 >> ~/.ssh/known_hosts
       - run:
-          name: Deploy Staging over SSH 1
-          command: ssh -o "StrictHostKeyChecking no" ubuntu "sh /home/ubuntu/react-app/restart-app.sh"
+          name: Deploy Staging over SSH
+          command: ssh -o "StrictHostKeyChecking no" ubuntu@3.218.67.255 "sh /home/ubuntu/react-app/restart-app.sh"
 
 workflows:
   version: 2

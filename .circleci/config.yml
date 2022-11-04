@@ -37,7 +37,7 @@ jobs:
           command: ssh-keyscan -H 3.218.67.255 >> ~/.ssh/known_hosts
       - run:
           name: Deploy Staging over SSH 1
-          command: ssh -i "/home/ubuntu/psl-explorer-staging.pem" ubuntu@3.218.67.255 "sh /home/ubuntu/react-app/restart-app.sh"
+          command: ssh -i psl-explorer-staging.pem ubuntu@3.218.67.255 "sh /home/ubuntu/react-app/restart-app.sh"
 
 workflows:
   version: 2

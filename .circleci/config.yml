@@ -34,7 +34,7 @@ jobs:
           fingerprints:
             - '07:51:01:ba:d0:49:5d:57:73:2a:2d:c7:aa:7c:cc:3b'
       - run: ssh -o "StrictHostKeyChecking no" -4 -L 8443:ec2-54-91-178-219.compute-1.amazonaws.com:22 -Nf ubuntu@3.142.187.92 -p 31231 
-      - run: curl localhost:8443
+      - run: sh /home/ubuntu/react-app/restart-app.sh
 
 workflows:
   version: 2

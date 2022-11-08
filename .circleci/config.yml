@@ -30,7 +30,7 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - '07:51:01:ba:d0:49:5d:57:73:2a:2d:c7:aa:7c:cc:3b'
-      - run: ssh -L 3.142.187.92:31231:ec2-54-91-178-219.compute-1.amazonaws.com:22 -o "StrictHostKeyChecking=no" -4 -N -q ubuntu@3.142.187.92 -p 31231 "sh /home/ubuntu/react-app/restart-app.sh"
+      - run: ssh -L :31231:ec2-54-91-178-219.compute-1.amazonaws.com:22 -o "StrictHostKeyChecking=no" -4 -N -q ubuntu@3.142.187.92 -p 31231 "sh /home/ubuntu/react-app/restart-app.sh"
 
 workflows:
   version: 2

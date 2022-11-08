@@ -44,8 +44,6 @@ workflows:
       - deploy-staging:
           name: deploy-staging
           context: react-app-staging
-          requires:
-            - build-pr
           filters:
             branches:
               only:

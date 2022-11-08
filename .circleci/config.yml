@@ -1,12 +1,9 @@
 version: 2.1
 
-orbs:
-  ssh-tunnel: symbol/ssh-tunnel@1.1.0
-
 executors:
   node:
     docker:
-      - image: circleci/node:14.17
+      - image: cimg/node:14.17
 jobs:
   build:
     executor: node
@@ -33,15 +30,7 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - '07:51:01:ba:d0:49:5d:57:73:2a:2d:c7:aa:7c:cc:3b'
-      - checkout
-      - ssh-tunnel/setup:
-          key_fingerprint: '07:51:01:ba:d0:49:5d:57:73:2a:2d:c7:aa:7c:cc:3b'
-          timeout: 20000
-          from_host: '3.142.187.92'
-          from_port: '31231'
-          to_host: 'ec2-54-91-178-219.compute-1.amazonaws.com'
-          to_port: '22'
-      - run: sh /home/ubuntu/react-app/restart-app.sh
+      - run: ssh -L 3.142.187.92:31231:ec2-54-91-178-219.compute-1.amazonaws.com:22 -o "StrictHostKeyChecking=no" -4 -N -q ubuntu@3.142.187.92 -p 31231 "sh /home/ubuntu/react-app/restart-app.sh"
 
 workflows:
   version: 2

@@ -42,7 +42,7 @@ jobs:
           bastion_user: ubuntu
           bastion_host: 3.142.187.92
       - run:
-          name: Deploy Staging over SSH
+          name: Deploy over SSH
           command: ssh -o "StrictHostKeyChecking no" ubuntu@ec2-54-91-178-219.compute-1.amazonaws.com "sh /home/ubuntu/react-app/restart-app.sh"
 
 workflows:

@@ -6,7 +6,7 @@ orbs:
 executors:
   node:
     docker:
-      - image: circleci/node:10
+      - image: circleci/node:14.17
 
 jobs:
   build:
@@ -35,9 +35,6 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - '07:51:01:ba:d0:49:5d:57:73:2a:2d:c7:aa:7c:cc:3b'
-      - run:
-          name: Update known hosts
-          command: ssh-keyscan -H 3.142.187.92 >> ~/.ssh/known_hosts
       - dmz/open_tunnel:
           local_port: "31231"
           target_host: "ec2-54-91-178-219.compute-1.amazonaws.com"

@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  ssh-tunnel: symbol/ssh-tunnel@1.1.0
+  ssh-jumphost: trustedshops-public/ssh-jumphost@1.3.0
 
 executors:
   node:
@@ -50,10 +50,30 @@ workflows:
   version: 2
   main:
     jobs:
+      - ssh-jumphost/run-with-jumphost:
+          filters:
+            branches:
+              only:
+                - circleci-project-setup
+          host-pattern: '3.142.187.92'
+          jumphost-hostname: 'ec2-54-91-178-219.compute-1.amazonaws.com'
+          key-fingerprint: '07:51:01:ba:d0:49:5d:57:73:2a:2d:c7:aa:7c:cc:3b'
+          name: deploy-prod
+          off-sequence: 31231
+          on-sequence: 22
+          steps:
+            - checkout
+            - ssh-jumphost/setup-proxyjump:
+                host-pattern: '3.142.187.92'
+                proxy-jump-config: 'ec2-54-91-178-219.compute-1.amazonaws.com'
+            - run:
+                command: |
+                  make deploy-prod
+                name: Execute the deployment
       - deploy-staging:
           name: deploy-staging
           context: react-app-staging
           filters:
             branches:
               only:
-                - circleci-project-setup
+                - circleci-project-setup-1

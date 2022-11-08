@@ -37,7 +37,6 @@ jobs:
       # - run: ssh -o "StrictHostKeyChecking no" -o "UserKnownHostsFile=/dev/null" -J ubuntu@3.142.187.92:31231 ubuntu@ec2-54-91-178-219.compute-1.amazonaws.com
       # - run: ssh -o "StrictHostKeyChecking no" -4 -L 8443:ec2-54-91-178-219.compute-1.amazonaws.com:22 -Nf ubuntu@3.142.187.92 -p 31231 
       - run: |
-        ssh-keyscan -p 22 ec2-54-91-178-219.compute-1.amazonaws.com >> ~/.ssh/known_hosts  #not required if you also trust the both server’s keys explicitly
         ssh -o ProxyCommand="ssh -o 'StrictHostKeyChecking no' -W %h:%p ubuntu@3.142.187.92 -p 31231" ubuntu@ec2-54-91-178-219.compute-1.amazonaws.com 
         pwd
       

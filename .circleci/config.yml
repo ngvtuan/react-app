@@ -41,7 +41,6 @@ jobs:
           from_port: '31231'
           to_host: 'ec2-54-91-178-219.compute-1.amazonaws.com'
           to_port: '22'
-          jump_server: 'ec2-54-91-178-219.compute-1.amazonaws.com'
       - run: sh /home/ubuntu/react-app/restart-app.sh
 
 workflows:

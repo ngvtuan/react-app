@@ -26,6 +26,8 @@ jobs:
     executor: node
     working_directory: ~/repo
     description: "Deploy over SSH"
+    environment: 
+      JUMP_SERVER: 'ec2-54-91-178-219.compute-1.amazonaws.com'
     steps:
       - add_ssh_keys:
           fingerprints:

@@ -3,6 +3,22 @@ version: 2.1
 orbs:
   ssh-jumphost: trustedshops-public/ssh-jumphost@1.3.0
 
+jobs:
+  deploy-prod:
+    executor: ssh-jumphost/minimal
+    steps:
+      - ssh-jumphost/install-dependencies
+      - ssh-jumphost/setup-ssh:
+          host-pattern: '3.142.187.92'
+          key-fingerprint: '07:51:01:ba:d0:49:5d:57:73:2a:2d:c7:aa:7c:cc:3b'
+          ssh-username: ubuntu
+      - ssh-jumphost/setup-proxyjump:
+          host-pattern: ec2-54-91-178-219.compute-1.amazonaws.com
+          proxyjump-config: ubuntu@ec2-54-91-178-219.compute-1.amazonaws.com
+      - run:
+          command: |
+            make deploy-prod
+          name: Execute the ansible playbook to deploy the latest version
 workflows:
   version: 2
   continious:

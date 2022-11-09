@@ -33,7 +33,7 @@ jobs:
       - run:
           name: Deploy over SSH
           # command: ssh -o 'StrictHostKeyChecking no' -o ProxyCommand="ssh -o 'StrictHostKeyChecking no' -W %h:%p ubuntu@$STAGING_SERVER_IP -p 31231" ubuntu@$PRIVATE_HOST "sudo find . -name restart-app.sh"
-          command: echo ${BASTION_HOST}
+          command: echo $BASTION_HOST
       
 
 workflows:

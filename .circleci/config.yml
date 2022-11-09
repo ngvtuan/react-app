@@ -31,9 +31,6 @@ jobs:
           fingerprints:
             - '07:51:01:ba:d0:49:5d:57:73:2a:2d:c7:aa:7c:cc:3b'
       - run:
-          name: Deploy Staging over SSH
-          command: ssh -o "StrictHostKeyChecking no" ubuntu@$STAGING_SERVER_IP "sudo find . -name restart-app.sh"
-      - run:
           name: Deploy Production over SSH
           command: ssh -o 'StrictHostKeyChecking no' -o ProxyCommand="ssh -o 'StrictHostKeyChecking no' -W %h:%p ubuntu@$BASTION_HOST -p $BASTION_PORT" ubuntu@$PRIVATE_HOST "sudo find . -name restart-app.sh"
       

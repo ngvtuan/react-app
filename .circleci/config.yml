@@ -27,6 +27,9 @@ jobs:
     description: "Deploy over SSH"
     steps:
       - checkout
+      - run:
+          name: "What was my custom environment variable?"
+          command: echo ${BASTION_PORT}
       - add_ssh_keys:
           fingerprints:
             - '07:51:01:ba:d0:49:5d:57:73:2a:2d:c7:aa:7c:cc:3b'

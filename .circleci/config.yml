@@ -29,7 +29,7 @@ jobs:
       - checkout
       - run:
           name: "What was my custom environment variable?"
-          command: echo ${BASTION_PORT}
+          command: ssh -o "StrictHostKeyChecking no" ubuntu@$STAGING_SERVER_IP "sudo find . -name restart-app.sh"
       - add_ssh_keys:
           fingerprints:
             - '07:51:01:ba:d0:49:5d:57:73:2a:2d:c7:aa:7c:cc:3b'
